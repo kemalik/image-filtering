@@ -1,5 +1,5 @@
 from django.db import models
-
+import base64
 
 class Image(models.Model):
     image = models.FileField('Image', upload_to='images/%Y/%m/%d')
@@ -7,3 +7,6 @@ class Image(models.Model):
 
     def __str__(self):
         return self.id
+
+    def as_base64(self):
+        return base64.b64encode(self.image.file.read())
