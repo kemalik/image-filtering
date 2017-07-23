@@ -1,4 +1,5 @@
 from rest_framework import viewsets
+
 from .serializers import ResourceSerializer
 from applications.filters.models import FilteredResource
 
