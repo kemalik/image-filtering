@@ -6,7 +6,7 @@ from rest_framework import serializers
 from applications.images.models import Image
 
 
-class ImageSerializer(serializers.HyperlinkedModelSerializer):
+class ImageSerializer(serializers.ModelSerializer):
     base64_image = serializers.CharField(write_only=True, style={'base_template': 'textarea.html'})
 
     class Meta:
