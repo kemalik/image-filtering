@@ -20,4 +20,4 @@ class FilteredResource(models.Model):
 @receiver(post_save, sender=FilteredResource)
 def send_apply_filter(instance, created, **kwargs):
     if created:
-        apply_filter(instance.image_id, instance.filter)
+        apply_filter(instance.id, instance.image_id, instance.filter)
