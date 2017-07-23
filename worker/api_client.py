@@ -18,7 +18,9 @@ class ApiClient(object):
         create_image_url = parse.urljoin(self.url, '/api/images/')
 
         response = requests.post(create_image_url, data={'base64_image': source})
-        return response.status_code == 201
+        if response.status_code == 201:
+            return response.json()['id']
+        return ''
 
     def update_resource_result(self, source_id, image_id):
         update_source_url = parse.urljoin(self.url, '/api/filter/{source_id}/'.format(source_id=source_id))
