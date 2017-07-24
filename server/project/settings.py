@@ -25,7 +25,7 @@ SECRET_KEY = '9wq_b(z&3#s-mno6$xst5xgzs7h351%tq863!l^nysjw7vlfk='
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -125,5 +125,5 @@ STATIC_URL = '/static/'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-CELERY_BROKER_URL = 'amqp://localhost'
-CELERY_RESULT_BACKEND = 'amqp://localhost'
+CELERY_BROKER_URL = 'amqp://rabbitmq'
+CELERY_RESULT_BACKEND = 'amqp://rabbitmq'
