@@ -14,7 +14,7 @@ logger = getLogger(__name__)
 app = Celery(
     'worker',
     broker=os.getenv('CELERY_BROKER_URL', 'amqp://localhost'),
-    backend=os.getenv('CELERY_BROKER_URL', 'amqp://localhost')
+    backend=os.getenv('CELERY_RESULT_BACKEND', 'amqp://localhost')
 )
 
 
