@@ -1,4 +1,6 @@
 import base64
+import os
+from logging import getLogger
 from tempfile import NamedTemporaryFile
 
 from celery import Celery
@@ -6,10 +8,14 @@ from celery import Celery
 from api_client import ApiClient
 from base64_utils import clear_base64, convert_to_base64
 from filters import apply_edge_filter, apply_red_tint_filter, apply_swirl_filter
-from logging import getLogger
 
 logger = getLogger(__name__)
-app = Celery('worker', broker='amqp://rabbitmq', backend='amqp://rabbitmq')
+
+app = Celery(
+    'worker',
+    broker=os.getenv('CELERY_BROKER_URL', 'amqp://localhost'),
+    backend=os.getenv('CELERY_BROKER_URL', 'amqp://localhost')
+)
 
 
 @app.task(name='apply_filter')
@@ -39,7 +45,6 @@ def apply_filter(resource_id, image_id, filter_type):
     ))
 
     if filtered_file_name:
-
         filtered_base64_image = convert_to_base64(filtered_file_name)
 
         filtered_image_id = api_client.create_image(filtered_base64_image)

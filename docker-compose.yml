@@ -4,9 +4,13 @@ services:
     image: rabbitmq
     hostname: rabbitmq
     container_name: "rabbitmq"
+
   worker:
     build: worker
     container_name: "worker"
+    environment:
+    - CELERY_BROKER_URL='amqp://rabbitmq'
+    - CELERY_RESULT_BACKEND='amqp://rabbitmq'
     volumes:
       - ./worker:/app
     depends_on:
@@ -20,7 +24,10 @@ services:
     container_name: "server"
     hostname: web
     working_dir: "/app"
-    command: ["/bin/sh", "-c", "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"]
+    command: ["/bin/sh", "-c", "python manage.py migrate && python manage.py runserver 0.0.0.0"]
+    environment:
+    - CELERY_BROKER_URL='amqp://rabbitmq'
+    - CELERY_RESULT_BACKEND='amqp://rabbitmq'
     volumes:
       - ./server:/app
     ports:
