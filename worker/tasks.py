@@ -5,14 +5,18 @@ from celery import Celery
 
 from api_client import ApiClient
 from base64_utils import clear_base64, convert_to_base64
-from filters import apply_edge_filter, apply_red_tint_filter
+from filters import apply_edge_filter, apply_red_tint_filter, apply_swirl_filter
+from logging import getLogger
 
+logger = getLogger(__name__)
 app = Celery('worker', broker='amqp://rabbitmq', backend='amqp://rabbitmq')
 
 
 @app.task(name='apply_filter')
 def apply_filter(resource_id, image_id, filter_type):
-    filtered_image_id = -1
+    logger.info('Got resource_id={resource_id}, image_id{image_id}, filter_type={filter_type}'.format(
+        resource_id=resource_id, image_id=image_id, filter_type=filter_type
+    ))
     api_client = ApiClient()
     temp_file = NamedTemporaryFile(delete=False, suffix='.png', mode='wb')
 
@@ -25,8 +29,14 @@ def apply_filter(resource_id, image_id, filter_type):
         filtered_file_name = apply_edge_filter(temp_file.name)
     elif filter_type == 'red_tint':
         filtered_file_name = apply_red_tint_filter(temp_file.name)
+    elif filter_type == 'swirl':
+        filtered_file_name = apply_swirl_filter(temp_file.name)
     else:
-        filtered_file_name = ''
+        filtered_file_name = None
+
+    logger.info('Saved filtered_file_name={filtered_file_name}'.format(
+        filtered_file_name=filtered_file_name
+    ))
 
     if filtered_file_name:
 
