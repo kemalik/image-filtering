@@ -1,0 +1,19 @@
+version: "2.0"
+services:
+  broker:
+    image: rabbitmq
+    container_name: "rabbitmq"
+  worker:
+    build: worker
+    container_name: "worker"
+  web:
+    build: server
+    container_name: "server"
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - broker
+    links:
+      - broker

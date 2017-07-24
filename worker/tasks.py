@@ -3,11 +3,11 @@ from tempfile import NamedTemporaryFile
 
 from celery import Celery
 
-from worker.api_client import ApiClient
-from worker.base64_utils import clear_base64, convert_to_base64
-from worker.filters import apply_edge_filter
+from api_client import ApiClient
+from base64_utils import clear_base64, convert_to_base64
+from filters import apply_edge_filter
 
-app = Celery('tasks', broker='amqp://localhost', backend='amqp://localhost')
+app = Celery('worker', broker='amqp://localhost', backend='amqp://localhost')
 
 
 @app.task(name='apply_filter')
