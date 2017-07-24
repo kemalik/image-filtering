@@ -4,7 +4,7 @@ from urllib import parse
 
 class ApiClient(object):
     def __init__(self) -> None:
-        self.url = 'http://localhost:8000/'
+        self.url = 'http://web:8000/'
 
     def get_image_source(self, image_id):
         get_image_url = parse.urljoin(self.url, '/api/images/{image_id}/'.format(image_id=image_id))

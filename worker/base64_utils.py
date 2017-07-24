@@ -2,7 +2,7 @@ import base64
 
 
 def clear_base64(base64_img):
-    return base64_img.split('base64,')[1].replace(' ', '+')
+    return base64_img.split('base64,')[-1].replace(' ', '+')
 
 
 def convert_to_base64(image):
