@@ -1,4 +1,3 @@
-import base64
 import os
 from logging import getLogger
 from tempfile import NamedTemporaryFile
