@@ -30,5 +30,5 @@ class ApiClient(object):
     def update_resource_result(self, source_id, image_id):
         update_source_url = parse.urljoin(self.url, '/api/filter/{source_id}/'.format(source_id=source_id))
 
-        response = requests.patch(update_source_url, data={'result': image_id})
+        response = requests.patch(update_source_url, data={'result': image_id, 'status': 'done'})
         return response.status_code == 200

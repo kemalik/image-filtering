@@ -20,7 +20,7 @@ app = Celery(
 
 @app.task(name='apply_filter')
 def apply_filter(resource_id, image_id, filter_type):
-    logger.info('Got resource_id={resource_id}, image_id{image_id}, filter_type={filter_type}'.format(
+    logger.info('Got resource_id={resource_id}, image_id={image_id}, filter_type={filter_type}'.format(
         resource_id=resource_id, image_id=image_id, filter_type=filter_type
     ))
 
@@ -38,7 +38,7 @@ def apply_filter(resource_id, image_id, filter_type):
     filtered_file_name = filter_applier.apply_filter()
 
     if filtered_file_name:
-        logger.info('Saved filtered_file_name={filtered_file_name}'.format(
+        logger.info('Saved filtered_file_name = {filtered_file_name}'.format(
             filtered_file_name=filtered_file_name
         ))
 
@@ -49,4 +49,6 @@ def apply_filter(resource_id, image_id, filter_type):
         api_client.update_resource_result(resource_id, filtered_image_id)
 
         return filtered_image_id
-    return 'Error'
+
+    logger.error('Error while apply filter')
+    return 'error'
