@@ -1,7 +1,7 @@
-from django.core.files.base import ContentFile
 from rest_framework import viewsets
-from .serializers import ImageSerializer
+
 from applications.images.models import Image
+from .serializers import ImageSerializer
 
 
 class ImagesViewSet(viewsets.ModelViewSet):
