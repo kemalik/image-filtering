@@ -1,11 +1,13 @@
 from project.celery import app
 from celery.task.control import inspect
 from logging import getLogger
+from django.conf import settings
 
 logger = getLogger(__name__)
 
-insp = inspect()
-if not insp.stats(): raise Exception('Workers not launched')
+if not settings.IS_TESTING:
+    insp = inspect()
+    if not insp.stats(): raise Exception('Workers not launched')
 
 
 def apply_filter(resource_id, image_id, filter_type):
