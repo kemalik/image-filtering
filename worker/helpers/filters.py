@@ -3,13 +3,16 @@ from skimage.filters import roberts
 from skimage.io import imread, imsave
 from skimage.transform import swirl
 
+from helpers.constants import FILE_EXTENSION_SIZE
 
-class FilterApplier(object):
+
+class FilterApply(object):
     def __init__(self, file_path, filter_type) -> None:
         self.file_path = file_path
         self.filter_type = filter_type
         self.filtered_image = None
-        self.result_file_path = file_path[:-4] + '_filtered' + file_path[-4:]
+
+        self.result_file_path = file_path[:FILE_EXTENSION_SIZE] + '_filtered' + file_path[FILE_EXTENSION_SIZE:]
         self.image = None
 
     def save_image(self):

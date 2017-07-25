@@ -4,7 +4,6 @@ FILTERS_CHOICE = (
     ('swirl', 'Swirl'),
 )
 
-
 STATUS_CHOICE = (
     ('in_progress', 'In Progress'),
     ('done', 'Done'),

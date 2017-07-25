@@ -6,14 +6,16 @@ from celery import Celery
 
 from helpers.api_client import ApiClient
 from helpers.base64_utils import Base64Util
-from helpers.filters import FilterApplier
+from helpers.constants import AMQP_LOCALHOST_URL
+from helpers.filters import FilterApply
 
 logger = getLogger(__name__)
 
+
 app = Celery(
     'worker',
-    broker=os.getenv('CELERY_BROKER_URL', 'amqp://localhost'),
-    backend=os.getenv('CELERY_RESULT_BACKEND', 'amqp://localhost')
+    broker=os.getenv('CELERY_BROKER_URL', AMQP_LOCALHOST_URL),
+    backend=os.getenv('CELERY_RESULT_BACKEND', AMQP_LOCALHOST_URL)
 )
 
 
@@ -33,7 +35,7 @@ def apply_filter(resource_id, image_id, filter_type):
 
     temp_file.write(png_source)
 
-    filter_applier = FilterApplier(temp_file.name, filter_type)
+    filter_applier = FilterApply(temp_file.name, filter_type)
     filtered_file_name = filter_applier.apply_filter()
 
     if filtered_file_name:

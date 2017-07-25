@@ -25,7 +25,7 @@ RESPONSE
 ```
 REQUEST
 POST http://localhost:8000/api/filter/
-- iamge: 77
+- image: 77
 - filter: edge # one of {edge|red_tint|swirl}
 
 RESPONSE
