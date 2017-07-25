@@ -4,32 +4,36 @@ from skimage.io import imread, imsave
 from skimage.transform import swirl
 
 
-def apply_edge_filter(file_name):
-    image = imread(file_name, as_grey=True)
-    edge_roberts = roberts(image)
+class FilterApplier(object):
+    def __init__(self, file_path, filter_type) -> None:
+        self.file_path = file_path
+        self.filter_type = filter_type
+        self.filtered_image = None
+        self.result_file_path = file_path[:-4] + '_filtered' + file_path[-4:]
+        self.image = None
 
-    imsave(file_name, edge_roberts)
+    def save_image(self):
+        imsave(self.result_file_path, self.filtered_image)
 
-    return file_name
+    def read_image(self):
+        self.image = imread(self.file_path, as_grey=True)
 
+    def apply_filter(self):
+        self.read_image()
 
-def apply_red_tint_filter(file_name):
-    image = imread(file_name, as_grey=True)
+        if self.filter_type == 'edge':
+            self.filtered_image = roberts(self.image)
 
-    rgb_image = color.gray2rgb(image)
+        elif self.filter_type == 'red_tint':
+            rgb_image = color.gray2rgb(self.image)
+            red_multiplier = [1, 0, 0]
+            self.filtered_image = red_multiplier * rgb_image
 
-    red_multiplier = [1, 0, 0]
+        elif self.filter_type == 'swirl':
+            self.filtered_image = swirl(self.image, rotation=0, strength=10, radius=120)
 
-    imsave(file_name, red_multiplier * rgb_image)
+        else:
+            return None
 
-    return file_name
-
-
-def apply_swirl_filter(file_name):
-    image = imread(file_name, as_grey=True)
-
-    swirled_image = swirl(image, rotation=0, strength=10, radius=120)
-
-    imsave(file_name, swirled_image)
-
-    return file_name
+        self.save_image()
+        return self.result_file_path

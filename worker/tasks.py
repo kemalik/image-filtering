@@ -7,7 +7,7 @@ from celery import Celery
 
 from api_client import ApiClient
 from base64_utils import clear_base64, convert_to_base64
-from filters import apply_edge_filter, apply_red_tint_filter, apply_swirl_filter
+from filters import FilterApplier
 
 logger = getLogger(__name__)
 
@@ -31,14 +31,9 @@ def apply_filter(resource_id, image_id, filter_type):
 
     png_source = base64.b64decode(cleaned_base64_image)
     temp_file.write(png_source)
-    if filter_type == 'edge':
-        filtered_file_name = apply_edge_filter(temp_file.name)
-    elif filter_type == 'red_tint':
-        filtered_file_name = apply_red_tint_filter(temp_file.name)
-    elif filter_type == 'swirl':
-        filtered_file_name = apply_swirl_filter(temp_file.name)
-    else:
-        filtered_file_name = None
+
+    filter_applier = FilterApplier(temp_file.name, filter_type)
+    filtered_file_name = filter_applier.apply_filter()
 
     logger.info('Saved filtered_file_name={filtered_file_name}'.format(
         filtered_file_name=filtered_file_name
