@@ -110,4 +110,4 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 CELERY_BROKER_URL = os.getenv('CELERY_BROKER_URL', 'amqp://localhost')
 CELERY_RESULT_BACKEND = os.getenv('CELERY_BROKER_URL', 'amqp://localhost')
 
-IS_TESTING = os.getenv('IS_TESTING', False)
+IS_TESTING = os.getenv('IS_TESTING', True)

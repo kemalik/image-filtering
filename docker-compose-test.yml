@@ -1,0 +1,10 @@
+version: "2.0"
+services:
+  web:
+    build: server
+    container_name: "server"
+    hostname: web
+    working_dir: "/app"
+    command: ["/bin/sh", "-c", "python manage.py migrate && python manage.py test"]
+    environment:
+    - IS_TESTING=True

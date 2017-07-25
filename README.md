@@ -78,3 +78,9 @@ http://localhost:8000/api/filter/
 
 ### Result image
 ![alt text](https://box.everhelper.me/attachment/1030413/2a7753b8-3dd6-4536-9a2c-4ec73a1dec16/761474-pOWAKQ1ITAF0nWP5/screen.png)
+
+
+## Test
+```
+docker-compose -f docker-compose-test.yml up
+```
