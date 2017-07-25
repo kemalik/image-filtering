@@ -11,5 +11,8 @@ if not settings.IS_TESTING:
 
 
 def apply_filter(resource_id, image_id, filter_type):
-    app.send_task('apply_filter', args=[resource_id, image_id, filter_type])
-    logger.debug('Task sent')
+    if not settings.IS_TESTING:
+        app.send_task('apply_filter', args=[resource_id, image_id, filter_type])
+        logger.debug('Task sent')
+    else:
+        logger.warning('TEST task got')

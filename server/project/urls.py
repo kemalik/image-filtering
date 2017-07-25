@@ -7,7 +7,7 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^api/images/', include(image_urls, namespace='images')),
+    url(r'^api/images/', include(image_urls, namespace='images'), name='images'),
     url(r'^api/filter/', include(filter_urls, namespace='filters'))
 ]
 

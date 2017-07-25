@@ -7,5 +7,5 @@ router = routers.DefaultRouter()
 router.register(r'', ImagesViewSet)
 
 urlpatterns = [
-    url(r'', include(router.urls)),
+    url(r'', include(router.urls, namespace='img'), name='images'),
 ]
