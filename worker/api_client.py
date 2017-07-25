@@ -1,10 +1,15 @@
-import requests
+import os
+from logging import getLogger
 from urllib import parse
+
+import requests
+
+logger = getLogger(__name__)
 
 
 class ApiClient(object):
     def __init__(self) -> None:
-        self.url = 'http://web:8000/'
+        self.url = os.getenv('SERVER_HOST', 'http://localhost:8000/')
 
     def get_image_source(self, image_id):
         get_image_url = parse.urljoin(self.url, '/api/images/{image_id}/'.format(image_id=image_id))
@@ -27,5 +32,3 @@ class ApiClient(object):
 
         response = requests.patch(update_source_url, data={'result': image_id})
         return response.status_code == 200
-
-
